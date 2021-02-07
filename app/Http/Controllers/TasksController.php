@@ -108,9 +108,9 @@ class TasksController extends Controller
      // putまたはpatchでmessages/（任意のid）にアクセスされた場合の「更新処理」
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'status'=>'reuired | max:10',
-        // ]);
+        $request->validate([
+            'status'=>'reuired | max:10',
+        ]);
         
         // idの値でメッセージを検索して取得
         $tasks = Task::findOrFail($id);
