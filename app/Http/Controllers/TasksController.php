@@ -49,8 +49,11 @@ class TasksController extends Controller
      // postでmessages/にアクセスされた場合の「新規登録処理」
     public function store(Request $request)
     {
-        $task=new Task;
+        $request->validate([
+            'status'=>'required|max:10',
+         ]);
         
+        $task=new Task;
         $task->content=$request->content;
         $task->status=$request->status;
         $task->save();
@@ -105,8 +108,13 @@ class TasksController extends Controller
      // putまたはpatchでmessages/（任意のid）にアクセスされた場合の「更新処理」
     public function update(Request $request, $id)
     {
+        // $request->validate([
+        //     'status'=>'reuired | max:10',
+        // ]);
+        
         // idの値でメッセージを検索して取得
         $tasks = Task::findOrFail($id);
+        
         // メッセージを更新
         $tasks->content = $request->content;
         $tasks->status=$request->status;
