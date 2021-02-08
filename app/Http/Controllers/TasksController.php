@@ -109,7 +109,7 @@ class TasksController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status'=>'reuired | max:10',
+            'status'=>'required|max:10',
         ]);
         
         // idの値でメッセージを検索して取得
