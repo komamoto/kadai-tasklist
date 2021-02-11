@@ -17,7 +17,7 @@ class TasksController extends Controller
      // getでmessages/にアクセスされた場合の「一覧表示処理」
     public function index()
     {
-        $tasks=Task::all();
+        $tasks=Task::paginate(25);
         
         //viewに下記を送り込む。
         return view('Tasks.index',[
