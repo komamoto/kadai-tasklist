@@ -24,10 +24,13 @@ class TasksController extends Controller
             // ユーザの投稿の一覧を作成日時の降順で取得
             // （後のChapterで他ユーザの投稿も取得するように変更しますが、現時点ではこのユーザの投稿のみ取得します）
             $microposts = $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
-
+            
+            $tasks=Task::paginate(25);
+            
             $data = [
                 'user' => $user,
                 'microposts' => $microposts,
+                'tasks'=>$tasks
             ];
         }
         // Welcomeビューでそれらを表示

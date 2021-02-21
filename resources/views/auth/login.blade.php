@@ -24,7 +24,7 @@
             {!! Form::close() !!}
             
             {{--ユーザ登録ページへのリンク--}}
-            <p class="mt-2">New user?{!! link_to_route('singup.get','Sing up now!') !!}</p>
+            <p class="mt-2">New user?{!! link_to_route('signup.get','Sing up now!') !!}</p>
                 
         </div>
     </div>
