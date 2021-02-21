@@ -17,11 +17,21 @@ class TasksController extends Controller
      // getでmessages/にアクセスされた場合の「一覧表示処理」
     public function index()
     {
-        $tasks=Task::paginate(25);
-        
-        //viewに下記を送り込む。
-        return view('Tasks.index',[
-            'tasks'=>$tasks,]);
+        $data = [];
+        if (\Auth::check()) { // 認証済みの場合
+            // 認証済みユーザを取得
+            $user = \Auth::user();
+            // ユーザの投稿の一覧を作成日時の降順で取得
+            // （後のChapterで他ユーザの投稿も取得するように変更しますが、現時点ではこのユーザの投稿のみ取得します）
+            $microposts = $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
+
+            $data = [
+                'user' => $user,
+                'microposts' => $microposts,
+            ];
+        }
+        // Welcomeビューでそれらを表示
+        return view('welcome', $data);
     }
 
     /**
@@ -49,16 +59,23 @@ class TasksController extends Controller
      // postでmessages/にアクセスされた場合の「新規登録処理」
     public function store(Request $request)
     {
+        // バリデーション
         $request->validate([
             'status'=>'required|max:10',
          ]);
+         // 認証済みユーザ（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
+         $request->user()->tasks()->create([
+             'content'=>$request->content,
+            ]);
+        // 前のURLへリダイレクトさせる
+        return back();
         
-        $task=new Task;
-        $task->content=$request->content;
-        $task->status=$request->status;
-        $task->save();
+        // $task=new Task;
+        // $task->content=$request->content;
+        // $task->status=$request->status;
+        // $task->save();
         
-        return redirect('/');
+        // return redirect('/');
         
     }
 
@@ -74,6 +91,7 @@ class TasksController extends Controller
     {
         $task=Task::findOrFail($id);
         
+       
         return view('Tasks.show',[
             'task'=>$task,]);
     }
@@ -135,11 +153,16 @@ class TasksController extends Controller
     public function destroy($id)
     {
         // idの値でメッセージを検索して取得
-        $tasks = Task::findOrFail($id);
-        // メッセージを削除
-        $tasks->delete();
+        $tasks= \App\Task::findOrFail($id);
+        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
+        if(\Auth::id() ===$tasks->user_id){
+            $tasks->delete();
+        }
+        
+        return back();
+        // $tasks->delete();
 
-        // トップページへリダイレクトさせる
-        return redirect('/');
+        // // トップページへリダイレクトさせる
+        // return redirect('/');
     }
 }
