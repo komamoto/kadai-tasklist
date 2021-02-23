@@ -15,6 +15,7 @@
             <tbody>
                 @foreach($tasks as $task)
                     <tr>
+                        {{--メッセージ詳細ページへのリンク--}}
                         <td>{!! link_to_route('tasks.show',$task->id,['task'=>$task->id]) !!}</td>
                         <td>{{ $task->content }}</td>
                         <td>{{ $task->status }}</td>
@@ -23,11 +24,9 @@
             </tbody>
         </table>
     @endif
-    
     {{-- ページネーションのリンク --}}
     {{ $tasks->links() }}
-    
-    {!! link_to_route('tasks.create','新規',['class'=>'btn btn primary']) !!}
+    {!! link_to_route('tasks.create','新規メッセージの投稿',['class'=>'btn btn primary']) !!}
     
     
 @endsection

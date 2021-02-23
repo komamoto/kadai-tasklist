@@ -1,3 +1,5 @@
+
+<!--//いらない？？-->
 <!--{!! Form::open(['route' => 'tasks.store']) !!}-->
 <!--    <div class="form-group">-->
 <!--        {!! Form::textarea('content', old('content'), ['class' => 'form-control', 'rows' => '2']) !!}-->

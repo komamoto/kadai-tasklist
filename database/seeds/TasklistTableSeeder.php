@@ -11,11 +11,11 @@ class TasklistTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i <= 100; $i++) {
-            DB::table('tasks')->insert([
-                'content' => 'test title ' . $i,
-                'status' => 'test content ' . $i
-            ]);
-        }
+        // for($i = 1; $i <= 100; $i++) {
+        //     DB::table('tasks')->insert([
+        //         'content' => 'test title ' . $i,
+        //         'status' => 'test content ' . $i
+        //     ]);
+        // }
     }
 }
