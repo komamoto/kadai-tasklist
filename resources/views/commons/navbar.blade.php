@@ -19,7 +19,7 @@
                             {{-- ログアウトへのリンク --}}
                             <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
                             {{--メッセージ作成ページへのリンク--}}
-                            <li class="nav-item">{!! link_to_route('tasks.create','新規メッセージの投稿',[],['class'=>'nav-link'])!!}</li>
+                            <li class="nav-item">{!! link_to_route('tasks.create','新規タスクの投稿',[],['class'=>'nav-link'])!!}</li>
                         </ul>
                     </li>
                 @else

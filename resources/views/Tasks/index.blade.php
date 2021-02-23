@@ -8,7 +8,7 @@
             <thead>
                 <tr>
                     <th>id</th>
-                    <th>メッセージ</th>
+                    <th>タスク</th>
                     <th>ステータス</th>
                 </tr>
             </thead>
@@ -26,7 +26,7 @@
     @endif
     {{-- ページネーションのリンク --}}
     {{ $tasks->links() }}
-    {!! link_to_route('tasks.create','新規メッセージの投稿',['class'=>'btn btn primary']) !!}
+    {!! link_to_route('tasks.create','新規タスクの投稿',['class'=>'btn btn primary']) !!}
     
     
 @endsection

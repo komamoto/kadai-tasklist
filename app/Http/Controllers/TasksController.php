@@ -25,7 +25,6 @@ class TasksController extends Controller
             return view('Tasks.index',[
                 'tasks'=>$tasks]);
         }
-        
         // メッセージ一覧ビューでそれを表示
         return view('welcome');
     }
@@ -40,7 +39,7 @@ class TasksController extends Controller
     public function create()
     {
         $task=new Task;
-        
+    
         return view('Tasks.create',[
             'task'=>$task,
         ]);
@@ -88,10 +87,14 @@ class TasksController extends Controller
     {
         // idの値でユーザを検索して取得
         $task=Task::findOrFail($id);
-        
-        return view('Tasks.show',[
+       if(\Auth::id() ===$task->user_id){
+           return view('Tasks.show',[
             'task'=>$task,
         ]);
+        }
+        // トップページへリダイレクトさせる
+        return redirect('/');
+        
     }
 
     /**
@@ -106,11 +109,14 @@ class TasksController extends Controller
     {
         // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
-
-        // メッセージ編集ビューでそれを表示
-        return view('Tasks.edit', [
+        if(\Auth::id() ===$task->user_id){
+            // メッセージ編集ビューでそれを表示
+            return view('Tasks.edit', [
             'task' => $task,
         ]);
+        }
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
@@ -130,14 +136,15 @@ class TasksController extends Controller
         
         // idの値でメッセージを検索して取得
         $tasks = Task::findOrFail($id);
-        
-        // メッセージを更新
-        $tasks->content = $request->content;
-        $tasks->status=$request->status;
-        $tasks->save();
-
-        // トップページへリダイレクトさせる
-        return redirect('/');
+        // メッセージ編集ビューでそれを表示
+        if(\Auth::id() ===$tasks->user_id){
+            // メッセージを更新
+            $tasks->content = $request->content;
+            $tasks->status=$request->status;
+            $tasks->save();
+            // トップページへリダイレクトさせる
+            return redirect('/');
+        }
     }
 
     /**
